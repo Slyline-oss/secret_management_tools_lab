@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: SecretsMngLab
+  datasource:
+    url: jdbc:postgresql://postgres:5432/secretlab
+    username: secretlab_user
+    password: secretlab_pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false

@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: secretlab-postgres
+    environment:
+      POSTGRES_DB: secretlab
+      POSTGRES_USER: secretlab_user
+      POSTGRES_PASSWORD: secretlab_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    mem_limit: 512m
+    cpus: 1
+
+  app:
+    build:
+      context: ../../app/SecretsMngLab
+      dockerfile: Dockerfile
+    container_name: secretlab-app
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    mem_limit: 512m
+    cpus: 1
+
+volumes:
+  postgres_data:
