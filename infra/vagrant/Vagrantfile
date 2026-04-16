@@ -1,0 +1,27 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "gyptazy/ubuntu22.04-arm64"
+
+  config.vm.define "runner" do |runner|
+    runner.vm.hostname = "runner"
+    runner.vm.network "private_network", ip: "192.168.56.11"
+    runner.vm.provider "vwmware-desktop" do |vb|
+      vb.name = "secret-thesis-runner"
+      vb.memory = 2048
+      vb.cpus = 2
+    end
+    runner.vm.provision "shell", path: "scripts/common.sh"
+    runner.vm.provision "shell", path: "scripts/runner.sh"
+  end
+
+  config.vm.define "apphost" do |apphost|
+    apphost.vm.hostname = "apphost"
+    apphost.vm.network "private_network", ip: "192.168.56.12"
+    apphost.vm.provider "vwmware-desktop" do |vb|
+      vb.name = "secret-thesis-apphost"
+      vb.memory = 3072
+      vb.cpus = 2
+    end
+    apphost.vm.provision "shell", path: "scripts/common.sh"
+    apphost.vm.provision "shell", path: "scripts/app-host.sh"
+  end
+end
