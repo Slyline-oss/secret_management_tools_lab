@@ -13,7 +13,6 @@ apt-get install -y \
   unzip \
   jq \
   make \
-  openjdk-17-jdk \
   net-tools
 
 install -m 0755 -d /etc/apt/keyrings

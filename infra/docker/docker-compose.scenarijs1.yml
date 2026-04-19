@@ -11,8 +11,13 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./init-db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U secretlab_user -d secretlab"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
     mem_limit: 512m
-    cpus: 1
+    cpus: 0.75
 
   app:
     build:
@@ -20,11 +25,17 @@ services:
       dockerfile: Dockerfile
     container_name: secretlab-app
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
     ports:
       - "8080:8080"
-    mem_limit: 512m
-    cpus: 1
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/secretlab
+      SPRING_DATASOURCE_USERNAME: secretlab_user
+      SPRING_DATASOURCE_PASSWORD: secretlab_pass
+      JAVA_TOOL_OPTIONS: "-Xms128m -Xmx384m"
+    mem_limit: 768m
+    cpus: 1.0
 
 volumes:
   postgres_data:
