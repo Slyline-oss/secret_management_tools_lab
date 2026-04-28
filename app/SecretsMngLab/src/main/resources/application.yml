@@ -6,8 +6,8 @@ spring:
     name: SecretsMngLab
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/secretlab}
-    username: ${SPRING_DATASOURCE_USERNAME:secretlab_user}
-    password: ${SPRING_DATASOURCE_PASSWORD:secretlab_pass}
+    username: secretlab_user
+    password: secretlab_pass
   jpa:
     hibernate:
       ddl-auto: update
