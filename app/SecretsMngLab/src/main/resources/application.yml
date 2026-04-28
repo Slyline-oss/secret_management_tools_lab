@@ -7,7 +7,7 @@ spring:
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/secretlab}
     username: secretlab_user
-    password: secretlab_pass
+    password: REMOVED_DB_PASSWORD
   jpa:
     hibernate:
       ddl-auto: update
