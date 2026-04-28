@@ -20,11 +20,10 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v6
-
       - name: Build JAR
-        run: gradle clean bootJar --no-daemon
+        run: |
+          cd app/SecretsMngLab
+          ./gradlew clean bootJar --no-daemon
 
       - name: Prepare deployment bundle
         run: |
