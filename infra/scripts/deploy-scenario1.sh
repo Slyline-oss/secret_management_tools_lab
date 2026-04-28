@@ -2,7 +2,7 @@
 set -euo pipefail
 
 APP_BASE_DIR="/opt/secret-thesis"
-DOCKER_DIR="${APP_BASE_DIR}/infra/docker"
+DOCKER_DIR="${APP_BASE_DIR}/deploy/scenario1/"
 
 echo "1 scenarija izversana"
 
