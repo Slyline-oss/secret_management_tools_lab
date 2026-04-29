@@ -27,6 +27,6 @@ vault kv get -field=private_key "$VAULT_STATIC_SECRET_PATH" > /tmp/private_key.p
 chmod 600 /tmp/private_key.pem
 export APP_PRIVATE_KEY_PATH="/tmp/private_key.pem"
 
-echo "[INFO] Programmatūras "
+echo "[INFO] Programmatūras ielāde"
 
 exec java -jar app.jar
