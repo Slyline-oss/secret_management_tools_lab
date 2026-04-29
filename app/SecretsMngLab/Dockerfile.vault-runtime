@@ -6,9 +6,10 @@ RUN apt-get update \
 
 ARG VAULT_VERSION=1.18.0
 
-RUN curl -fsSL "https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_amd64.zip" -o vault.zip \
+RUN curl -fsSL "https://releases.hashicorp.com/vault/${VAULT_VERSION}/vault_${VAULT_VERSION}_linux_arm64.zip" -o vault.zip \
     && unzip vault.zip \
     && mv vault /usr/local/bin/vault \
+    && chmod +x /usr/local/bin/vault \
     && rm vault.zip
 
 WORKDIR /app
