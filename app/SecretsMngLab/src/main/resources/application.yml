@@ -5,14 +5,18 @@ spring:
   application:
     name: SecretsMngLab
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/secretlab}
-    username: secretlab_user
-    password: REMOVED_DB_PASSWORD
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
 
 app:
+  jwt:
+    secret: ${APP_JWT_SECRET:}
   api:
-    key: REMOVED_API_KEY
+    key: ${APP_API_KEY:}
+  private-key:
+    path: ${APP_PRIVATE_KEY_PATH:}
