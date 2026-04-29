@@ -1,4 +1,4 @@
-name: Deploy Scenario 1
+name: Deploy Scenarios
 
 on:
   workflow_dispatch:
