@@ -45,7 +45,7 @@ jobs:
             cp infra/docker/docker-compose.scenarijs1.yml deploy-bundle/docker-compose.yml
           fi
 
-          if [ "$SCENARIO" = "scenario2-vault" ]; then
+          if [ "$SCENARIO" = "scenario2" ]; then
             cp app/SecretsMngLab/Dockerfile.vault-runtime deploy-bundle/Dockerfile.runtime
             cp app/SecretsMngLab/vault-entrypoint.sh deploy-bundle/vault-entrypoint.sh
             cp infra/docker/docker-compose.scenarijs2.yml deploy-bundle/docker-compose.yml
