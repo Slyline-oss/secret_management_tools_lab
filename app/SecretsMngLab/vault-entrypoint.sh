@@ -20,7 +20,7 @@ export APP_JWT_SECRET="$(vault kv get -field=jwt_secret "$VAULT_STATIC_SECRET_PA
 export APP_API_KEY="$(vault kv get -field=api_key "$VAULT_STATIC_SECRET_PATH")"
 export AWS_ACCESS_KEY_ID="$(vault kv get -field=aws_access_key_id "$VAULT_STATIC_SECRET_PATH")"
 export AWS_SECRET_ACCESS_KEY="$(vault kv get -field=aws_secret_access_key "$VAULT_STATIC_SECRET_PATH")"
-export INTERNAL_TOKEN="$(vault kv get -field=internal-token "$VAULT_STATIC_SECRET_PATH")"
+export INTERNAL_TOKEN="$(vault kv get -field=internal_token "$VAULT_STATIC_SECRET_PATH")"
 
 
 vault kv get -field=private_key "$VAULT_STATIC_SECRET_PATH" > /tmp/private_key.pem
