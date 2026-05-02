@@ -3,9 +3,9 @@ services:
     image: postgres:16
     container_name: secretlab-postgres
     environment:
-      POSTGRES_DB: secretlab
-      POSTGRES_USER: secretlab_user
-      POSTGRES_PASSWORD: REMOVED_DB_PASSWORD
+      POSTGRES_DB: 
+      POSTGRES_USER:
+      POSTGRES_PASSWORD: 
     ports:
       - "5432:5432"
     volumes:
@@ -30,8 +30,8 @@ services:
       - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/secretlab
-      SPRING_DATASOURCE_USERNAME: secretlab_user
-      SPRING_DATASOURCE_PASSWORD: REMOVED_DB_PASSWORD
+      SPRING_DATASOURCE_USERNAME:
+      SPRING_DATASOURCE_PASSWORD: 
       JAVA_TOOL_OPTIONS: "-Xms128m -Xmx384m"
     mem_limit: 768m
     cpus: 1.0

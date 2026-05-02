@@ -1,4 +1,4 @@
 ## Initial Setup
 
 GH token is (S5):
-GITHUB_TOKEN=REMOVED_GITHUB
+GITHUB_TOKEN=
