@@ -14,6 +14,8 @@ spring:
     show-sql: false
 
 app:
+  internal-token:
+    token: ${INTERNAL_TOKEN:}
   jwt:
     secret: ${APP_JWT_SECRET:}
   api:
