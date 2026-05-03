@@ -1,0 +1,21 @@
+FROM eclipse-temurin:21-jre
+
+RUN apt-get update \
+    && apt-get install -y curl bash \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/infisical/infisical-cli/setup.deb.sh' | bash \
+    && apt-get update \
+    && apt-get install -y infisical \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+COPY app.jar app.jar
+COPY infisical-entrypoint.sh infisical-entrypoint.sh
+
+RUN chmod +x infisical-entrypoint.sh
+
+EXPOSE 8080
+
+ENTRYPOINT ["./infisical-entrypoint.sh"]

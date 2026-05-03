@@ -11,6 +11,7 @@ on:
         options:
           - scenario1
           - scenario2
+          - scenario3
 
 jobs:
   build-and-deploy:
@@ -49,6 +50,12 @@ jobs:
             cp app/SecretsMngLab/Dockerfile.vault-runtime deploy-bundle/Dockerfile.runtime
             cp app/SecretsMngLab/vault-entrypoint.sh deploy-bundle/vault-entrypoint.sh
             cp infra/docker/docker-compose.scenarijs2.yml deploy-bundle/docker-compose.yml
+          fi
+
+          if [ "$SCENARIO" = "scenario3" ]; then
+            cp app/SecretsMngLab/Dockerfile.infisical-runtime deploy-bundle/Dockerfile.runtime
+            cp app/SecretsMngLab/infisical-entrypoint.sh deploy-bundle/infisical-entrypoint.sh
+            cp infra/docker/docker-compose.scenarijs3.yml deploy-bundle/docker-compose.yml
           fi
 
           cp infra/scripts/deploy.sh deploy-bundle/deploy.sh
