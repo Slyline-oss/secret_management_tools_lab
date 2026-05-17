@@ -1,0 +1,65 @@
+name: Deploy Scenarios
+
+on:
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: "Scenario to deploy"
+        required: true
+        default: "scenario1"
+        type: choice
+        options:
+          - scenario1
+          - scenario2
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build JAR
+        run: |
+          cd app/SecretsMngLab
+          ./gradlew clean bootJar --no-daemon
+
+      - name: Prepare deployment bundle
+        run: |
+          SCENARIO="${{ github.event.inputs.scenario }}"
+
+          rm -rf deploy-bundle
+          mkdir -p deploy-bundle
+
+          cp app/SecretsMngLab/build/libs/*.jar deploy-bundle/app.jar
+
+          if [ "$SCENARIO" = "scenario1" ]; then
+            cp app/SecretsMngLab/Dockerfile.runtime deploy-bundle/Dockerfile.runtime
+            cp infra/docker/docker-compose.scenarijs1.yml deploy-bundle/docker-compose.yml
+          fi
+
+          if [ "$SCENARIO" = "scenario2" ]; then
+            cp app/SecretsMngLab/Dockerfile.vault-runtime deploy-bundle/Dockerfile.runtime
+            cp app/SecretsMngLab/vault-entrypoint.sh deploy-bundle/vault-entrypoint.sh
+            cp infra/docker/docker-compose.scenarijs2.yml deploy-bundle/docker-compose.yml
+          fi
+
+          cp infra/scripts/deploy.sh deploy-bundle/deploy.sh
+
+      - name: Copy deployment bundle to apphost
+        run: |
+          SCENARIO="${{ github.event.inputs.scenario }}"
+          ssh -o StrictHostKeyChecking=no vagrant@192.168.56.12 "mkdir -p /opt/secret-thesis/deploy/$SCENARIO"
+          scp -o StrictHostKeyChecking=no deploy-bundle/* vagrant@192.168.56.12:/opt/secret-thesis/deploy/$SCENARIO/
+
+      - name: Execute deployment on apphost
+        run: |
+          SCENARIO="${{ github.event.inputs.scenario }}"
+          ssh -o StrictHostKeyChecking=no vagrant@192.168.56.12 "chmod +x /opt/secret-thesis/deploy/$SCENARIO/deploy.sh && /opt/secret-thesis/deploy/$SCENARIO/deploy.sh $SCENARIO"
